@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook, WebhookRequiredHeaders } from "svix";
 import prisma from "@/lib/prisma";
+import stripe from "@/lib/stripe";
 
 const webHookSecret = process.env.CLERK_WEBHOOK_SECRET || "";
 
@@ -65,12 +66,18 @@ async function handler(request: Request) {
       ...attributes
     } = evt!.data;
 
+    const stripeCustomer = await stripe.customers.create({
+      name: `${first_name} ${last_name}`,
+      email: email_address ? email_address[0].email_address : "",
+    });
+
     await prisma.user.upsert({
       where: {
         externalId: id as string,
       },
       create: {
         externalId: id,
+        stripeCustumerId: stripeCustomer.id,
         attributes,
       },
       update: {

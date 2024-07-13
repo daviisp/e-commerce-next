@@ -1,5 +1,5 @@
 import { ProductType } from "@/types/Product";
-import getProducts from "./actions";
+import { getProducts } from "./actions";
 import Product from "@/components/Product";
 
 export default async function Home() {
