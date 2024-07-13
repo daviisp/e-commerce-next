@@ -1,5 +1,6 @@
 import { ProductType } from "@/types/Product";
 import ProductImage from "./ProductImage";
+import formatPrice from "@/lib/formatPrice";
 
 type ProductProps = {
   product: ProductType;
@@ -13,7 +14,7 @@ const Product = ({ product }: ProductProps) => {
       </div>
       <div className="flex items-center justify-between gap-4 my-4">
         <p className="w-40 truncate font-bold text-white">{product.title}</p>
-        <p className="font-bold text-teal-500">{product.price}</p>
+        <p className="font-bold text-teal-500">{formatPrice(product.price)}</p>
       </div>
       <div>
         <button className="w-full rounded-md bg-teal-500 text-center text-white px-1 py-3">
