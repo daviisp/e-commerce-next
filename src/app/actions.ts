@@ -1,8 +1,25 @@
 "use server";
 
-export default async function getProducts() {
-  const response = await fetch("https://fakestoreapi.com/products");
-  const products = await response.json();
+import stripe from "@/lib/stripe";
+import { ProductType } from "@/types/Product";
 
-  return products;
+export default async function getProducts(): Promise<ProductType[]> {
+  const products = await stripe.products.list();
+  const formatedProducts = await Promise.all(
+    products.data.map(async (product) => {
+      const price = await stripe.prices.list({
+        product: product.id,
+      });
+
+      return {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        image: product.images[0],
+        price: price.data[0].unit_amount,
+        currency: price.data[0].currency,
+      };
+    })
+  );
+  return formatedProducts;
 }
