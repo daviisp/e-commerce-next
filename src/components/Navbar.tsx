@@ -15,7 +15,7 @@ const Navbar = () => {
             <UserButton />
           </SignedIn>
           <SignedOut>
-            <SignInButton mode="modal">
+            <SignInButton mode="modal" forceRedirectUrl="/">
               <button className="border rounded-md border-gray-400 px-3 py-2">
                 Fazer Login
               </button>
