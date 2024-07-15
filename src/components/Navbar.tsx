@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, SignUpButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import Cart from "./Cart";
 
@@ -9,17 +9,19 @@ const Navbar = () => {
         Next Store
       </Link>
       <div className="flex items-center gap-8">
+        <Cart />
         <div>
-          <Cart />
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="border rounded-md border-gray-400 px-3 py-2">
+                Fazer Login
+              </button>
+            </SignInButton>
+          </SignedOut>
         </div>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <SignedOut>
-          <SignUpButton mode="modal">
-            <button className="px-3 py-2 border rounded-md">Fazer login</button>
-          </SignUpButton>
-        </SignedOut>
       </div>
     </nav>
   );
