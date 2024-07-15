@@ -31,7 +31,7 @@ const CartDrawer = () => {
 
           {useCart.onCheckout === "cart" &&
             useCart.cart.map((item) => (
-              <div className="flex gap-4 py-4">
+              <div className="flex gap-4 py-4" key={item.id}>
                 <Image
                   src={item.image}
                   alt={item.name}
