@@ -15,6 +15,34 @@ model User {
   attributes       Json
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+  orders           Order[]
 
   @@map("users")
+}
+
+model Order {
+  id              String    @id @default(cuid())
+  user            User      @relation(fields: [userId], references: [externalId])
+  userId          String
+  amount          Float
+  currency        String
+  status          String
+  paymentIntentID String?   @unique
+  products        Product[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("orders")
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  image       String?
+  quantity    Float   @default(0)
+  orders      Order[]
+
+  @@map("products")
 }

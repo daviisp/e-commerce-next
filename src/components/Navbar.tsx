@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut, SignUpButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import Cart from "./Cart";
 
 const Navbar = () => {
   return (
@@ -7,14 +8,19 @@ const Navbar = () => {
       <Link href="/" className="font-bold uppercase text-gray-300">
         Next Store
       </Link>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
-      <SignedOut>
-        <SignUpButton mode="modal">
-          <button className="px-3 py-2 border rounded-md">Fazer login</button>
-        </SignUpButton>
-      </SignedOut>
+      <div className="flex items-center gap-8">
+        <div>
+          <Cart />
+        </div>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          <SignUpButton mode="modal">
+            <button className="px-3 py-2 border rounded-md">Fazer login</button>
+          </SignUpButton>
+        </SignedOut>
+      </div>
     </nav>
   );
 };

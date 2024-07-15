@@ -2,6 +2,7 @@ import { ProductType } from "@/types/Product";
 import ProductImage from "./ProductImage";
 import formatPrice from "@/lib/formatPrice";
 import Link from "next/link";
+import AddCart from "./AddCart";
 
 type ProductProps = {
   product: ProductType;
@@ -20,9 +21,7 @@ const Product = ({ product }: ProductProps) => {
         <p className="font-bold text-teal-500">{formatPrice(product.price!)}</p>
       </div>
       <div>
-        <button className="w-full rounded-md bg-teal-500 text-center text-white px-1 py-3">
-          Adicionar ao carrinho
-        </button>
+        <AddCart product={product} />
       </div>
     </div>
   );
