@@ -24,6 +24,7 @@ const Checkout = () => {
       .then((data) => {
         useCart.setPaymentIntentId(data.paymentIntent.id);
         setClientSecret(data.paymentIntent.client_secret);
+        console.log(data.paymentIntent);
       });
   }, [useCart.cart]);
 

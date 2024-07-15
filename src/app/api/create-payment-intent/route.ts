@@ -89,8 +89,6 @@ export async function POST(request: Request) {
         { status: 200 }
       );
     }
-
-    return NextResponse.json({}, { status: 200 });
   } else {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: total,
