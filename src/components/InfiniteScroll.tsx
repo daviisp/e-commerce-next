@@ -41,7 +41,7 @@ const InfiniteScroll = ({ initialsProducts }: InfiniteScrollProps) => {
   return (
     <>
       {products.map((product) => (
-        <Product product={product} />
+        <Product product={product} key={product.id} />
       ))}
 
       {hasMore && (
