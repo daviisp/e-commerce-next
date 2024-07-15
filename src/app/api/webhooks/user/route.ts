@@ -1,11 +1,11 @@
+import prisma from "@/lib/prisma";
 import { IncomingHttpHeaders } from "http";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook, WebhookRequiredHeaders } from "svix";
-import prisma from "@/lib/prisma";
-import stripe from "@/lib/stripe";
+import Stripe from "stripe";
 
-const webHookSecret = process.env.CLERK_WEBHOOK_SECRET || "";
+const webhookSecret = process.env.CLERK_WEBHOOK_SECRET || "";
 
 type EventType = "user.created" | "user.updated" | "*";
 
@@ -19,7 +19,7 @@ type EventDataType = {
   id: string;
   first_name: string;
   last_name: string;
-  email_address: EmailAddressType[];
+  email_addresses: EmailAddressType[];
   primary_email_address_id: string;
   attributes: Record<string, string | number>;
 };
@@ -32,14 +32,12 @@ type EmailAddressType = {
 async function handler(request: Request) {
   const payload = await request.json();
   const headersList = headers();
-
   const heads = {
     "svix-id": headersList.get("svix-id"),
     "svix-timestamp": headersList.get("svix-timestamp"),
     "svix-signature": headersList.get("svix-signature"),
   };
-
-  const wh = new Webhook(webHookSecret);
+  const wh = new Webhook(webhookSecret);
   let evt: Event | null = null;
 
   try {
@@ -48,36 +46,36 @@ async function handler(request: Request) {
       heads as IncomingHttpHeaders & WebhookRequiredHeaders
     ) as Event;
   } catch (err) {
-    if (err instanceof Error) {
-      console.error((err as Error).message);
-      return NextResponse.json({}, { status: 400 });
-    }
+    console.error((err as Error).message);
+    return NextResponse.json({}, { status: 400 });
   }
 
-  const eventType: EventType = evt!.type;
-
+  const eventType: EventType = evt.type;
   if (eventType === "user.created" || eventType === "user.updated") {
     const {
       id,
       first_name,
       last_name,
-      email_address,
+      email_addresses,
       primary_email_address_id,
       ...attributes
-    } = evt!.data;
+    } = evt.data;
 
-    const stripeCustomer = await stripe.customers.create({
+    // inserir usuario no stripe
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+      apiVersion: "2022-11-15",
+    });
+
+    const customer = await stripe.customers.create({
       name: `${first_name} ${last_name}`,
-      email: email_address ? email_address[0].email_address : "",
+      email: email_addresses ? email_addresses[0].email_address : "",
     });
 
     await prisma.user.upsert({
-      where: {
-        externalId: id as string,
-      },
+      where: { externalId: id as string },
       create: {
-        externalId: id,
-        stripeCustumerId: stripeCustomer.id,
+        externalId: id as string,
+        stripeCustomerId: customer.id,
         attributes,
       },
       update: {
