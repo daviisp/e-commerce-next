@@ -13,6 +13,7 @@
     "@clerk/localizations": "^2.4.6",
     "@clerk/nextjs": "^5.2.3",
     "@prisma/client": "^5.16.2",
+    "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^1.54.1",
     "clsx": "^2.1.1",
     "next": "14.2.5",

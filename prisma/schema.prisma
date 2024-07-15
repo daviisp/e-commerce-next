@@ -11,7 +11,7 @@ datasource db {
 model User {
   id               Int      @id @default(autoincrement())
   externalId       String   @unique
-  stripeCustumerId String   @unique
+  stripeCustomerId String   @unique
   attributes       Json
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -38,7 +38,7 @@ model Order {
 model Product {
   id          String  @id @default(cuid())
   name        String
-  description String
+  description String?
   price       Float
   image       String?
   quantity    Float   @default(0)

@@ -77,7 +77,7 @@ async function handler(request: Request) {
       },
       create: {
         externalId: id,
-        stripeCustumerId: stripeCustomer.id,
+        stripeCustomerId: stripeCustomer.id,
         attributes,
       },
       update: {

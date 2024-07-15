@@ -5,6 +5,7 @@ const isPublicRoute = createRouteMatcher([
   "/sign-up(.*)",
   "/",
   "/api/webhooks/user",
+  "/api/create-payment-intent",
 ]);
 
 export default clerkMiddleware(
