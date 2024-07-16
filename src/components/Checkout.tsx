@@ -1,9 +1,10 @@
 "use client";
 
 import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
-import { Elements, PaymentElement } from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import { useCartStore } from "@/store";
 import { useEffect, useState } from "react";
+import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -45,7 +46,7 @@ export default function Checkout() {
     <div>
       {clientSecret ? (
         <Elements options={options} stripe={stripePromise}>
-          <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
+          <CheckoutForm clientSecret={clientSecret} />
         </Elements>
       ) : (
         <div>

@@ -36,7 +36,7 @@ const InfiniteScroll = ({ initialsProducts }: InfiniteScrollProps) => {
     if (InView && hasMore && !isLoading) {
       loadMoreProducts();
     }
-  }, [InView, isLoading]);
+  }, [InView, hasMore, isLoading]);
 
   return (
     <>
