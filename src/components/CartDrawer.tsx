@@ -38,9 +38,9 @@ const CartDrawer = () => {
           {useCart.onCheckout === "cart" &&
             useCart.cart.map((item) => (
               <motion.div
-                initial={{ scale: 1, rotateZ: 0, opacity: 0.75 }}
-                animate={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
-                exit={{ scale: 0.5, rotateZ: 10, opacity: 0 }}
+                initial={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+                animate={{ scale: 1, rotateZ: 0, opacity: 0.75 }}
+                exit={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
                 className="flex gap-4 py-4"
                 key={item.id}
               >
