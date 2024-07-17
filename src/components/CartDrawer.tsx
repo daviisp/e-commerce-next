@@ -24,7 +24,7 @@ const CartDrawer = () => {
         onClick={() => useCart.toggleCart()}
       >
         <div
-          className="absolute top-0 right-0 w-1/3 h-screen p-8 rounded-md bg-slate-600"
+          className="absolute top-0 right-0 w-1/3 h-screen p-8 rounded-md bg-slate-600 overflow-y-scroll"
           onClick={(e) => e.stopPropagation()}
         >
           <h1
