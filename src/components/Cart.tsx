@@ -30,7 +30,7 @@ const Cart = () => {
           {useCart.cart.length}
         </span>
       </div>
-      {!useCart.isOpen && <CartDrawer />}
+      {useCart.isOpen && <CartDrawer />}
     </>
   );
 };

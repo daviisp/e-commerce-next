@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ptBR } from "@clerk/localizations";
 import Navbar from "@/components/Navbar";
 import Hydrate from "@/components/Hydrate";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           <Hydrate>
             <Navbar />
             <main>{children}</main>
+            <Toaster />
           </Hydrate>
         </body>
       </ClerkProvider>

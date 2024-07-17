@@ -13,6 +13,7 @@ type CartState = {
   paymentIntentId: string;
   setPaymentIntentId: (paymentIntentId: string) => void;
   clearCart: () => void;
+  itemRemovedCompleted: boolean;
 };
 
 export const useCartStore = create<CartState>()(
@@ -34,6 +35,7 @@ export const useCartStore = create<CartState>()(
             return { cart: updatedCart };
           }
         }),
+      itemRemovedCompleted: false,
       removeFromCart: (productId) =>
         set((state) => {
           const productIndex = state.cart.findIndex((p) => p.id === productId);
