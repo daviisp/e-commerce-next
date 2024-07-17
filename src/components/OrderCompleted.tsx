@@ -9,7 +9,6 @@ const OrderCompleted = () => {
   useEffect(() => {
     useCart.setPaymentIntentId("");
     useCart.clearCart();
-    useCart.setCheckout("cart");
   }, []);
 
   return (
@@ -18,6 +17,9 @@ const OrderCompleted = () => {
       <button
         className="bg-teal-600 text-white py-2 px-4 rounded-md mt-4"
         onClick={() => {
+          setTimeout(() => {
+            useCart.setCheckout("cart");
+          }, 1000 * 1);
           useCart.toggleCart();
         }}
       >
