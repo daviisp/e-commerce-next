@@ -12,16 +12,23 @@ const RemoveCart = ({ product }: RemoveCartProps) => {
   const useCart = useCartStore();
 
   const handleRemove = () => {
-    useCart.removeFromCart(product.id);
+    try {
+      useCart.removeFromCart(product.id);
 
-    const isProductInCart = useCartStore
-      .getState()
-      .cart.some((item) => item.id === product.id);
+      const productInCart = useCartStore
+        .getState()
+        .cart.find((item) => item.id === product.id);
 
-    if (!isProductInCart) {
+      if (!productInCart) {
+        toast({
+          title: "Produto removido com sucesso!",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
       toast({
+        title: "Erro. Tente novamente",
         variant: "destructive",
-        title: "Produto removido com sucesso!",
       });
     }
   };
